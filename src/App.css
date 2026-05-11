@@ -9,7 +9,7 @@
 body {
   margin: 0;
   overflow: hidden;
-  /* Deep space gradient */
+  /* Your Deep space gradient */
   background: radial-gradient(circle at center, #020617 0%, #010208 100%);
 }
 
@@ -18,7 +18,6 @@ body {
   100% { transform: translateX(100%); }
 }
 
-/* Optional: Make the input box pulse slightly when focused */
 input:focus::placeholder {
   color: rgba(0, 229, 255, 0.6);
   transition: color 0.3s ease;
@@ -50,11 +49,10 @@ input:focus::placeholder {
   font-size: 14px;
 }
 
-/* Fixes the Input Box Alignment */
 .hud-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center the form horizontally */
+  align-items: center; 
   gap: 2rem;
 }
 
@@ -66,15 +64,10 @@ input:focus::placeholder {
   width: 100%;
 }
 
-/* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 3px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #00e5ff;
   box-shadow: 0 0 10px #00e5ff;
-}
-
-@keyframes shimmer {
-  100% { transform: translateX(100%); }
 }
