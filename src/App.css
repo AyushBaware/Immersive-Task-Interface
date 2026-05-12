@@ -9,21 +9,29 @@
 body {
   margin: 0;
   overflow: hidden;
-  /* Your Deep space gradient */
+  /* Deep space radial background */
   background: radial-gradient(circle at center, #020617 0%, #010208 100%);
 }
 
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+/* Glassmorphism Cards */
+.glass-card {
+  background: rgba(2, 6, 23, 0.7);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  width: 100%;
 }
 
-input:focus::placeholder {
-  color: rgba(0, 229, 255, 0.6);
-  transition: color 0.3s ease;
+/* High-tech custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #00e5ff;
+  box-shadow: 0 0 10px #00e5ff;
 }
 
-/* Custom Cyber Checkbox */
+/* Cyber checkboxes */
 .cyber-check {
   appearance: none;
   width: 20px;
@@ -49,25 +57,7 @@ input:focus::placeholder {
   font-size: 14px;
 }
 
-.hud-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  gap: 2rem;
-}
-
-.glass-card {
-  background: rgba(2, 6, 23, 0.7);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(0, 229, 255, 0.2);
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-  width: 100%;
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: 3px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #00e5ff;
-  box-shadow: 0 0 10px #00e5ff;
+input:focus::placeholder {
+  color: rgba(0, 229, 255, 0.6);
+  transition: color 0.3s ease;
 }

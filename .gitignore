@@ -7,6 +7,9 @@ node_modules
 dist
 dist-ssr
 *.local
+dist/
+dist-ssr/
+vercel.json
 
 # Logs
 npm-debug.log*
