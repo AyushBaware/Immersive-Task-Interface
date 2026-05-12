@@ -4,35 +4,32 @@ import { registerSW } from 'virtual:pwa-register'
 import './index.css'
 import App from './App.jsx'
 
-// Register PWA Service Worker
+// Service Worker for Offline Mobile PWA use
 registerSW({ immediate: true })
 
-// Silence specific Three.js warnings for a clean console
-const originalWarn = console.warn
-console.warn = (...args) => {
-  const message = args[0]?.toString?.() || ''
-  if (!message.includes('THREE.Clock')) {
-    originalWarn(...args)
-  }
-}
+// Optimization: Silence warnings for cleaner production logs
+console.warn = () => {};
 
-const loader = document.getElementById('neural-loader')
+const root = document.getElementById('root');
+const loader = document.getElementById('neural-loader');
 
-const initApp = () => {
-  createRoot(document.getElementById('root')).render(
+const initSystem = () => {
+  createRoot(root).render(
     <StrictMode>
       <App />
     </StrictMode>,
-  )
+  );
 
-  // Force loader to stay for 1.8 seconds for a professional transition
-  setTimeout(() => {
-    if (loader) {
-      loader.classList.add('fade-out')
-      // Completely remove from DOM after the 0.6s CSS transition
-      setTimeout(() => loader.remove(), 600)
-    }
-  }, 2500) 
-}
+  // Use 'load' event to ensure 3D textures/fonts are in memory
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (loader) {
+        loader.classList.add('fade-out');
+        // Clean removal after animation finishes
+        setTimeout(() => loader.remove(), 600);
+      }
+    }, 1500); // 1.5s forced minimum for professional "Intro" feel
+  });
+};
 
-initApp()
+initSystem();
