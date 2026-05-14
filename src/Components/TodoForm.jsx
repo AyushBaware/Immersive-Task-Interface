@@ -24,7 +24,7 @@ function TodoForm() {
     }
 
     return (
-        <form onSubmit={add} className="flex items-center gap-3 p-2 bg-black/40 border border-white/10 rounded-2xl backdrop-blur-xl group focus-within:border-cyan-500/50 transition-all">
+        <form onSubmit={add} className="todo-input-form flex items-center gap-3 p-2 rounded-2xl transition-all">
             <input
                 type="text"
                 placeholder="INITIALIZE TASK..."

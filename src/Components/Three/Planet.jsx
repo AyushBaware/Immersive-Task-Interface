@@ -1,14 +1,29 @@
-﻿import { useRef } from 'react';
+﻿import { useRef, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Float, Sphere } from '@react-three/drei';
-import * as THREE from 'three';
+import { Float } from '@react-three/drei';
 import gsap from 'gsap';
 import { useTodo } from '../../Contexts/TodoContext';
 
 export default function Planet() {
+  const groupRef = useRef();
   const coreRef = useRef();
   const hexShellRef = useRef();
   const { ripple, triggerRipple } = useTodo();
+
+  // Animate scale-in when component mounts
+  useEffect(() => {
+    if (groupRef.current) {
+      groupRef.current.scale.set(0, 0, 0);
+      gsap.to(groupRef.current.scale, {
+        x: 1,
+        y: 1,
+        z: 1,
+        duration: 0.7,
+        delay: 0.05,
+        ease: 'back.out(1.2)',
+      });
+    }
+  }, []);
 
   const handlePulse = (e) => {
     e.stopPropagation();
@@ -31,15 +46,15 @@ export default function Planet() {
   });
 
   return (
-    <group position={[1.8, 0, 0]} onClick={handlePulse}>
+    <group ref={groupRef} position={[1.8, 0, 0]} onClick={handlePulse}>
       <Float speed={0.9} rotationIntensity={0.3} floatIntensity={0.18}>
-        
+
         {/* THE CORE: Adjusted to catch and reflect task light */}
         <mesh ref={coreRef}>
           <sphereGeometry args={[1.5, 64, 64]} />
           <meshStandardMaterial
             color="#010206"
-            roughness={0.4} // Increase roughness to 0.4 to catch the "star" glow path
+            roughness={0.4}
             metalness={0.8}
             transparent
             opacity={0.95}
@@ -49,13 +64,13 @@ export default function Planet() {
         {/* HEX SHELL */}
         <mesh ref={hexShellRef} scale={1.01}>
           <sphereGeometry args={[1.5, 32, 32]} />
-          <meshStandardMaterial 
-            color="#00e5ff" 
-            wireframe 
-            emissive="#00e5ff" 
-            emissiveIntensity={ripple ? 5 : 0.5} 
-            transparent 
-            opacity={0.1} 
+          <meshStandardMaterial
+            color="#00e5ff"
+            wireframe
+            emissive="#00e5ff"
+            emissiveIntensity={ripple ? 5 : 0.5}
+            transparent
+            opacity={0.1}
           />
         </mesh>
       </Float>

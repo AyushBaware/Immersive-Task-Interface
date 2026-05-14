@@ -12,10 +12,23 @@ function App() {
   const [ripple, setRipple] = useState(false)
   const [isReady, setIsReady] = useState(false)
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsReady(true), 100);
-    return () => clearTimeout(timer);
+  // 🔷 LOADING GATE: Only set ready when Scene signals it's initialized
+  const handleSceneReady = useCallback(() => {
+    console.log('[Scene] Ready signal received, showing UI');
+    setIsReady(true);
+    window.dispatchEvent(new CustomEvent('scene-ready'));
   }, []);
+
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      if (!isReady) {
+        console.warn('[Fallback] Scene ready timeout exceeded, forcing UI visibility');
+        setIsReady(true);
+      }
+    }, 8000);
+
+    return () => clearTimeout(fallbackTimer);
+  }, [isReady]);
 
   const triggerRipple = useCallback(() => {
     setRipple(true)
@@ -25,11 +38,10 @@ function App() {
   const addTodo = (todoText) => {
     const newTodo = {
       id: Date.now(),
-      todo: todoText.todo, 
+      todo: todoText.todo,
       completed: false,
-      // --- CRITICAL: Added for Scene.jsx TaskParticles ---
       angle: Math.random() * Math.PI * 2,
-      radius: 3.5 + Math.random() * 1.5, 
+      radius: 3.5 + Math.random() * 1.5,
       speed: 0.003 + Math.random() * 0.005,
       zOffset: (Math.random() - 0.5) * 2
     }
@@ -65,7 +77,7 @@ function App() {
     <TodoProvider value={{ todos, addTodo, updateTodo, deleteTodo, toggleComplete, ripple, triggerRipple }}>
       <div className={`relative h-screen w-full bg-[#010208] overflow-hidden transition-opacity duration-700 ${isReady ? 'opacity-100' : 'opacity-0'}`}>
         
-        <div className="fixed inset-0 z-0"><Scene /></div>
+        <div className="fixed inset-0 z-0"><Scene onReady={handleSceneReady} /></div>
 
         <div className="relative z-10 h-full w-full flex flex-col p-6 sm:p-12 main-content-layout pointer-events-none">
           
