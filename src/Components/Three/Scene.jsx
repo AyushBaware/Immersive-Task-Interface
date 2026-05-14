@@ -98,9 +98,11 @@ function SceneContent({ onReady }) {
       let frameCount = 0;
       const animate = () => {
         frameCount++;
-        if (frameCount >= 2) {
+        if (frameCount >= 3) {
           hasNotifiedRef.current = true;
-          onReady();
+          setTimeout(() => {
+            onReady();
+          }, 300);
         } else {
           requestAnimationFrame(animate);
         }

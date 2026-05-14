@@ -25,7 +25,7 @@ function App() {
         console.warn('[Fallback] Scene ready timeout exceeded, forcing UI visibility');
         setIsReady(true);
       }
-    }, 8000);
+    }, 5000);
 
     return () => clearTimeout(fallbackTimer);
   }, [isReady]);
